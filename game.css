@@ -1,0 +1,137 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(
+    to top left,
+    rgb(99, 13, 99),
+    rgba(83, 4, 4, 0.863)
+  );
+}
+
+.container {
+  border-radius: 1rem;
+  width: 80%;
+  margin: auto;
+  margin-top: 8rem;
+  background: linear-gradient(to left, rgb(240, 167, 240), rgb(238, 153, 153));
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.player {
+  font-size: 30px;
+  color: rgb(22, 22, 22);
+  text-align: center;
+  font-weight: bolder;
+  padding: 5rem 0rem;
+}
+
+.player--active {
+  background-color: rgba(255, 255, 255, 0.39);
+}
+
+.player-0-score {
+  font-size: 50px;
+  margin-top: 20px;
+  color: rgb(185, 14, 14);
+}
+
+.player-1 {
+}
+
+.current {
+  color: #eee;
+  font-size: 15px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  border: 1px solid purple;
+  width: 10rem;
+  margin: auto;
+  margin-top: 10rem;
+  background-color: rgb(196, 35, 196);
+  padding: 1rem 0;
+  border-radius: 1rem;
+}
+
+.current-score {
+  padding-top: 1rem;
+  font-size: 25px;
+}
+
+.buttons {
+  bottom: 0;
+  width: 10rem;
+  margin: auto;
+  margin-top: -30rem;
+}
+
+.newgame-label {
+  position: relative;
+  text-align: center;
+  background-color: rgba(238, 238, 238, 0.699);
+  border-radius: 20px;
+  padding: 0.3rem 0;
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.roll-dice {
+  position: relative;
+  width: 7rem;
+  margin: auto;
+  margin-top: -22%;
+}
+.roll-digits {
+  width: 7rem;
+  text-align: center;
+  padding: 1.5rem 0;
+  background-color: #eee;
+  font-size: 50px;
+  color: rgb(185, 14, 14);
+  font-weight: bold;
+}
+
+.roll-label {
+  position: relative;
+  width: 50%;
+  margin: auto;
+  margin-top: 17rem;
+  z-index: 1;
+  transition: top 0.3s linear ease-in;
+}
+
+.roll-label:active {
+  position: relative;
+  top: 0.2rem;
+}
+
+.hold-label {
+  position: relative;
+  width: 70%;
+  margin: auto;
+  margin-top: 2rem;
+  z-index: 1;
+}
+
+.hidden {
+  display: none;
+}
+
+.player--winner {
+  position: relative;
+  background-color: #333;
+}
+
+.player--winner .name {
+  font-weight: bolder;
+  color: #c7365f;
+}
