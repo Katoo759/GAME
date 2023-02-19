@@ -1,6 +1,5 @@
 'use strict';
 
-const odd = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19];
 const rollDigits = document.querySelector('.roll-digits');
 const digits0EL = document.querySelector('.digits--0');
 const digits1EL = document.querySelector('.digits--1');
@@ -19,106 +18,128 @@ rollDigits.classList.toggle('hidden');
 digits0EL.textContent = 0;
 digits1EL.textContent = 0;
 
+//Random Number Generator
+const getrandomNumber = function (min, max) {
+  let step1 = max - min + 1;
+  let step2 = Math.random() * step1;
+  let result = Math.floor(step2) + min;
+  return result;
+};
 
+const CreateArrayOfNumbers = function (start, end) {
+  let myArray = [];
+
+  for (let i = start; i <= end; i++) {
+    myArray.push(i);
+  }
+  return myArray;
+};
+
+// console.log(numbersArray);
 
 //newGame
-let currentScore, currentScore2, activePlayer, playing
-const init = function(){
-    currentScore = 1;
-    currentScore2 = 1;
-    activePlayer = 0;
-    playing = true
+let currentScore, currentScore2, activePlayer, playing, numbersArray;
+const init = function () {
+  currentScore = 1;
+  currentScore2 = 1;
+  activePlayer = 0;
+  playing = true;
 
+  rollDigits.classList.add('hidden');
 
-    rollDigits.classList.add('hidden');
+  player0EL.classList.add('player--active');
+  player1EL.classList.remove('player--active');
 
-    player0EL.classList.add('player--active');
-    player1EL.classList.remove('player--active');
-  
-    player0EL.classList.remove('player--winner');
-    player1EL.classList.remove('player--winner');
-  
-    player0EL.classList.remove('player--winner');
-    player1EL.classList.remove('player--winner');
-  
-    digits0EL.textContent = 0;
-    digits1EL.textContent = 0;
-  
-    current0EL.textContent = 0;
-    current1EL.textContent = 0;
-}
-init()
+  player0EL.classList.remove('player--winner');
+  player1EL.classList.remove('player--winner');
 
+  player0EL.classList.remove('player--winner');
+  player1EL.classList.remove('player--winner');
+
+  digits0EL.textContent = 0;
+  digits1EL.textContent = 0;
+
+  current0EL.textContent = 0;
+  current1EL.textContent = 0;
+
+  numbersArray = CreateArrayOfNumbers(1, 20);
+};
+init();
 
 //roll functionality
 rollLabel.addEventListener('click', function () {
-    if(playing){
-        const dice = Math.trunc(Math.random() * 20) + 1;
-  console.log(dice);
+  if (playing) {
+    let ranndomIndex = getrandomNumber(0, numbersArray.length);
+    let randomNumber = numbersArray[ranndomIndex];
 
-  //displaying the number
-  rollDigits.classList.remove('hidden');
-  rollDigits.textContent = dice;
+    // const index = odd.findIndex(acc => acc === dice)
+    // odd.splice(index[dice])
 
-  //displaying the number in dice number in the currentPlayer digits
-  digits0EL.textContent = dice; //ChangeLater
+    //displaying the number
+    rollDigits.classList.remove('hidden');
+    rollDigits.textContent = randomNumber;
 
-  //If an odd number is rolled
-  if (dice % 2 === 1) {
-    current0EL.textContent = currentScore++;
-  } else {
-    //switch to next player
-    activePlayer = activePlayer === 0 ? 1 : 0;
-    rollLabel.classList.add('hidden');
-    rollPlayer1.classList.remove('hidden');
-    rollDigits.textContent = '?';
+    //displaying the number in dice number in the currentPlayer digits
+    //ChangeLater
 
-    player0EL.classList.toggle('player--active');
-    player1EL.classList.toggle('player--active');
-  }
+    //If an odd number is rolled
+    if (randomNumber % 2 === 1) {
+      current0EL.textContent = currentScore++;
+      digits0EL.textContent = randomNumber;
+      numbersArray.splice(ranndomIndex, 1);
+      console.log(randomNumber);
+    } else {
+      //switch to next player
+      activePlayer = activePlayer === 0 ? 1 : 0;
+      rollLabel.classList.add('hidden');
+      rollPlayer1.classList.remove('hidden');
+      rollDigits.textContent = '?';
 
-  if (currentScore === 11) {
-    playing = false
-    document
-      .querySelector(`.player--${activePlayer}`)
-      .classList.add('player--winner');
-  }
+      player0EL.classList.toggle('player--active');
+      player1EL.classList.toggle('player--active');
     }
-  
-});
 
+    if (currentScore === 11) {
+      playing = false;
+
+      document
+        .querySelector(`.player--${activePlayer}`)
+        .classList.add('player--winner');
+    }
+  }
+});
 
 rollPlayer1.addEventListener('click', function () {
-    if(playing){
-        const dice = Math.trunc(Math.random() * 20) + 1;
+  if (playing) {
+    let ranndomIndex = getrandomNumber(0, numbersArray.length);
+    let randomNumber = numbersArray[ranndomIndex];
 
-  //displaying the number
-  rollDigits.classList.remove('hidden');
-  rollDigits.textContent = dice;
+    //displaying the number
+    rollDigits.classList.remove('hidden');
+    rollDigits.textContent = randomNumber;
 
-  digits1EL.textContent = dice;
+    if (randomNumber % 2 === 0) {
+      current1EL.textContent = currentScore2++;
+      digits1EL.textContent = randomNumber;
+      numbersArray.splice(ranndomIndex, 1);
+      console.log(`even ${randomNumber}`);
+    } else {
+      activePlayer = activePlayer === 0 ? 1 : 0;
+      rollLabel.classList.remove('hidden');
+      rollPlayer1.classList.add('hidden');
+      rollDigits.textContent = '?';
 
-  if (dice % 2 === 0) {
-    current1EL.textContent = currentScore2++;
-  } else {
-    activePlayer = activePlayer === 0 ? 1 : 0;
-    rollLabel.classList.remove('hidden');
-    rollPlayer1.classList.add('hidden');
-    rollDigits.textContent = '?';
-
-    player0EL.classList.add('player--active');
-    player1EL.classList.remove('player--active');
-  }
-
-  if (currentScore2 === 11) {
-    playing = false
-    document
-      .querySelector(`.player--${activePlayer}`)
-      .classList.add('player--winner');
-  }
+      player0EL.classList.add('player--active');
+      player1EL.classList.remove('player--active');
     }
-  
+
+    if (currentScore2 === 11) {
+      playing = false;
+      document
+        .querySelector(`.player--${activePlayer}`)
+        .classList.add('player--winner');
+    }
+  }
 });
 
-newgameLabel.addEventListener('click', init)
-
+newgameLabel.addEventListener('click', init);
